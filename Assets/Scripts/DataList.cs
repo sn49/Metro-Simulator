@@ -6,6 +6,7 @@ public class DataList : MonoBehaviour
 {
     public static DataList dataList = null;
     public List<Line> lines = new List<Line>();
+    public List<Train> trains = new List<Train>();
 
     private void Awake()
     {

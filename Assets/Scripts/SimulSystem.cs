@@ -13,6 +13,8 @@ public class SimulSystem : MonoBehaviour
     int mode;
     public GameObject createLineUI;
 
+    public GameObject train;
+
     public Text noticeText;
     public GameObject NoticeImage;
 
@@ -84,7 +86,7 @@ public class SimulSystem : MonoBehaviour
             {
                 if (DataList.dataList.lines.Count == 0)
                 {
-                    NoticeMessage("노선을 만들어주세요.");
+                    StartCoroutine(NoticeMessage("노선을 만들어주세요."));
                     return;
                 }
 
@@ -172,17 +174,36 @@ public class SimulSystem : MonoBehaviour
     {
         if (uinum == 1)
         {
-            GameObject ui = Instantiate(createLineUI);
-            ui.transform.SetParent(GameObject.Find("Canvas").transform);
-            ui.GetComponent<RectTransform>().anchoredPosition = new Vector2(0,0);
+            if (DataList.dataList.lines.Count!=1)
+            {
+                GameObject ui = Instantiate(createLineUI);
+                ui.transform.SetParent(GameObject.Find("Canvas").transform);
+                ui.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
+            }
+            else
+            {
+                StartCoroutine(NoticeMessage("현재 노선 1개만 지원합니다."));
+            }
+            
             
         }
     }
 
-    public void NoticeMessage(string message)
+    public IEnumerator NoticeMessage(string message)
     {
         NoticeImage.SetActive(true);
         noticeText.text = message;
+        yield return new WaitForSeconds(3);
+        NoticeImage.SetActive(false);
+    }
+
+    public void MakeTrain()
+    {
+        GameObject tempTrain=Instantiate(train,transform.position,Quaternion.identity);
+        tempTrain.GetComponent<Train>().SetUp();
+        
+
+
     }
 
 }

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6134709060331951321}
   - component: {fileID: 6134709060331951320}
-  - component: {fileID: 3492730622613907680}
+  - component: {fileID: 5134906753490188544}
   m_Layer: 0
   m_Name: train
   m_TagString: Untagged
@@ -83,7 +83,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &3492730622613907680
+--- !u!114 &5134906753490188544
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -98,4 +98,5 @@ MonoBehaviour:
   people: 0
   maxpeople: 0
   isMove: 0
+  line: 0
   order: 0

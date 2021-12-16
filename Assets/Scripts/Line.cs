@@ -11,6 +11,6 @@ public class Line:MonoBehaviour
     public int people;
     public bool repeat;
     public List<Station> stationList=new List<Station>();
-    public List<train> trainList=new List<train>();
+    public List<Train> trainList=new List<Train>();
 
 }
