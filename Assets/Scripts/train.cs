@@ -13,7 +13,7 @@ public class Train : MonoBehaviour
 
 
 
-    void Start()
+    void Start()    
     {
         SetUp();
     }
@@ -21,26 +21,18 @@ public class Train : MonoBehaviour
 
     void Update()
     {
-        transform.position = Vector3.MoveTowards(transform.position, DataList.dataList.lines[line - 1].stationList[order].transform.position, DataList.dataList.lines[line - 1].speed * Time.deltaTime);
+        if (isMove)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, DataList.dataList.lines[line - 1].stationList[order].transform.position, DataList.dataList.lines[line - 1].speed * Time.deltaTime);
 
-        print(transform.position - DataList.dataList.lines[line - 1].stationList[order].transform.position);
+        }
+
 
         if (transform.position == DataList.dataList.lines[line - 1].stationList[order].transform.position)
         {
-            if (order+1==DataList.dataList.lines[line-1].stationList.Count||(order==0&&!isPlus))
-            {
-                isPlus = !isPlus;
-            }
-
-            if (isPlus)
-            {
-                order++;
-
-            }
-            else
-            {
-                order--;
-            }
+            StartCoroutine(Stop(3));
+            ChangeDest();
+            
         }
     }
     
@@ -51,7 +43,64 @@ public class Train : MonoBehaviour
         order = 0;
         isPlus = true;
         transform.position = DataList.dataList.lines[line - 1].stationList[order].transform.position;
+        isMove = true;
 
 
+
+    }
+
+    public IEnumerator Stop(float time)
+    {
+        isMove = false;
+        yield return new WaitForSeconds(time);
+        isMove = true;
+
+    }
+
+    private void ChangeDest()
+    {
+        int currnet = DataList.dataList.lines[line - 1].stationList.Count;
+        if (isPlus)
+        {
+            order++;
+
+        }
+        else
+        {
+            order--;
+        }
+
+
+        if (DataList.dataList.lines[line - 1].repeat)
+        {
+            if (isPlus)
+            {
+                if (order == currnet)
+                {
+                    order = 0;
+                }
+            }
+            else
+            {
+                if (order == -1)
+                {
+                    order = currnet - 1;
+                }
+            }
+        }
+        else
+        {
+            if (order == -1 && !isPlus)
+            {
+                isPlus = !isPlus;
+                order = 0;
+
+            }
+            else if (order == currnet && isPlus)
+            {
+                isPlus = !isPlus;
+                order = currnet - 1;
+            }
+        }
     }
 }

@@ -14,6 +14,7 @@ public class SimulSystem : MonoBehaviour
     public GameObject createLineUI;
 
     public GameObject train;
+    public GameObject passenger;
 
     public Text noticeText;
     public GameObject NoticeImage;
@@ -148,6 +149,12 @@ public class SimulSystem : MonoBehaviour
                                 lineRenderer.SetPosition(i, DataList.dataList.lines[0].stationList[i].transform.position);
                             }
 
+                            if (DataList.dataList.lines[0].repeat)
+                            {
+                                lineRenderer.positionCount = DataList.dataList.lines[0].stationList.Count+1;
+                                lineRenderer.SetPosition(DataList.dataList.lines[0].stationList.Count, DataList.dataList.lines[0].stationList[0].transform.position);
+                            }
+
                             
                             
                             
@@ -202,6 +209,15 @@ public class SimulSystem : MonoBehaviour
         GameObject tempTrain=Instantiate(train,transform.position,Quaternion.identity);
         tempTrain.GetComponent<Train>().SetUp();
         
+
+
+    }
+
+    public void MakePassenger()
+    {
+        GameObject tempPassenger = Instantiate(passenger, transform.position, Quaternion.identity);
+        tempPassenger.GetComponent<Passenger>().SetUp();
+
 
 
     }
